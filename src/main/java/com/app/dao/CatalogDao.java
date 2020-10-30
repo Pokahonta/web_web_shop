@@ -4,19 +4,21 @@ import com.app.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class CatalogDao {
 
     @Autowired
-    private JdbcTemplate jdbsTemplate;
+    private JdbcTemplate jdbcTemplate;
 
  public List<Product> getProduct(){
      RowMapper<Product> rowMapper = (resultSet, rowNumber) -> mapCatalog(resultSet);
-    return jdbsTemplate.query("SELECT * FROM catalog", rowMapper);
+    return jdbcTemplate.query("SELECT * FROM catalog", rowMapper);
     }
 
     private Product mapCatalog(ResultSet resultSet) throws SQLException {
