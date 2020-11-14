@@ -2,24 +2,31 @@ package com.app.services;
 
 import com.app.dao.UserDao;
 import com.app.model.Registration;
+import com.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
 public class UserService {
 
+    public List<User> getAllUsers(){
+        return userDao.getUsers();
+    }
+
    @Autowired
    private UserDao userDao;
 
    public String getFirstUserFirstName(){
-
        return userDao.getUsers().get(0).getFirstName();
    }
+    public void storeUser(Registration reg){
+       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+            reg.setPassword(encoder.encode(reg.getPassword()));
 
-   public void storeUser(Registration reg){
-       userDao.storeUser(reg); //chtob sobludatj kononi (porjadok)
-   }
-
+        userDao.storeUser(reg); //chtob sobludatj kononi (porjadok)
+    }
 }

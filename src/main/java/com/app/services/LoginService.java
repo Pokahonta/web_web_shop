@@ -4,6 +4,7 @@ import com.app.dao.UserDao;
 import com.app.model.Login;
 import com.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +26,11 @@ public class LoginService {
       //  } else {
        //     return users.get(0).getId();
       //  }
-        if (!users.isEmpty() && users.get(0).getPassword().equals(login.getPassword())) {
-            //
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+       // login.setPassword(encoder.encode(login.getPassword));
+
+        if (!users.isEmpty() && encoder.matches(login.getPassword(), users.get(0).getPassword())) {
           return users.get(0).getId();
         }
         return null;

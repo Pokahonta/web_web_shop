@@ -17,15 +17,15 @@ public class UserDao {
     @Autowired //avtomaticeski podtjagivaet object
     private JdbcTemplate jdbsTemplate;
 
-    public void storeUser(Registration reg){   //metod poluchaet objekt registration
-        jdbsTemplate.update("INSERT INTO users (first_name, last_name, password, phone, card_nr, birth_date, email) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",    //update-proizvodit dejstvija s sql, zapolnjaem user i passw, ?-mi ewe ne znaem, chto tak budet vvoditsja
-          reg.getFirstName(),reg.getLastName(), reg.getPassword(), reg.getPhone(), reg.getCardNr(),reg.getBirthDate(), reg.getEmail());
-            //    reg.getFirstName(),reg.getLast_name(),reg.getPassword(), reg.getPhone(), reg.getCard_nr(),reg.getBirth_date());   //ukazivaem chto poluchaem, parametri
+    public void storeUser(Registration reg) {   //metod poluchaet objekt registration
+        jdbsTemplate.update("INSERT INTO users (first_name, last_name, password, phone, card_nr, birth_date, email) VALUES(?, ?, ?, ?, ?, ?, ?)",    //update-proizvodit dejstvija s sql, zapolnjaem user i passw, ?-mi ewe ne znaem, chto tak budet vvoditsja
+                reg.getFirstName(), reg.getLastName(), reg.getPassword(), reg.getPhone(), reg.getCardNr(), reg.getBirthDate(), reg.getEmail());
+        //    reg.getFirstName(),reg.getLast_name(),reg.getPassword(), reg.getPhone(), reg.getCard_nr(),reg.getBirth_date());   //ukazivaem chto poluchaem, parametri
     }
 
     public List<User> getUsers() {
-      RowMapper<User> rowMapper = (resultSet, rowNumber) -> mapUser(resultSet);
-      return jdbsTemplate.query("SELECT * FROM users", rowMapper);
+        RowMapper<User> rowMapper = (resultSet, rowNumber) -> mapUser(resultSet);
+        return jdbsTemplate.query("SELECT * FROM users", rowMapper);
     }
 
 
@@ -41,17 +41,13 @@ public class UserDao {
         user.setPhone(resultSet.getString("phone"));
         user.setCardNr(resultSet.getString("card_nr"));
 
-
         return user;
     }
 
-  //  public List<User> getUsersByUsernameAndPassword(User user) {
-     public List<User> getUsersByFirstName(String firstName) {
+    public List<User> getUsersByFirstName(String firstName) {
         RowMapper<User> rowMapper = (rs, rowNumber) -> mapUser(rs);  //rs-result set
-  //      return jdbsTemplate.query("SELECT * FROM users where users.first_name = ? and users.password=?",
-  //              new Object[] {user.getFirstName(), user.getPassword()} ,rowMapper);
-         return jdbsTemplate.query("SELECT * FROM users WHERE email = ?", rowMapper, firstName);
 
+        return jdbsTemplate.query("SELECT * FROM users WHERE email = ?", rowMapper, firstName);
 
     }
 
