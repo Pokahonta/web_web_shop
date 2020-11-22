@@ -44,10 +44,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute Login loginObject, Model model) {
+    public String loginUser(@ModelAttribute Login loginObject, Model model) {  //loginObject vhodnoj parametr
         Integer userId = loginService.getUserId(loginObject);
         if (userId != null){
             currentUser.setId(userId);
+            currentUser.setName(loginObject.getEmail());   //pod setName lezhit Email
             model.addAttribute("id", userId);
             return "login_response";
         }

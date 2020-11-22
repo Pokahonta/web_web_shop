@@ -25,7 +25,7 @@ public class CurrentUserImpl implements CurrentUser{
         return name;
     }
 
-    @Override
+    @Override  //pereznachaem funkciju na rabotu ne tak, kak propisano na currentUser, a imenno tak, kak tut
     public void setName(String name) {
         this.name = name;
     }
