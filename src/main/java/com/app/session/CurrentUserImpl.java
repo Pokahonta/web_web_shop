@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Scope(value = "session", proxyMode = ScopedProxyMode.INTERFACES)
 @Component
-public class CurrentUserImpl implements CurrentUser{
-    private int id;
+public abstract class CurrentUserImpl implements CurrentUser {
+    private Integer id;
     private String name;
+    private Integer langId;
 
     @Override
     public Integer getId() {
@@ -25,8 +26,18 @@ public class CurrentUserImpl implements CurrentUser{
         return name;
     }
 
-    @Override  //pereznachaem funkciju na rabotu ne tak, kak propisano na currentUser, a imenno tak, kak tut
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Integer getLangId() {
+        return langId;
+    }
+
+    @Override
+    public void setLangId(Integer langId) {
+        this.langId = langId;
     }
 }

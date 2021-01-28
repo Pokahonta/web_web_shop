@@ -13,18 +13,28 @@ import java.util.List;
 @Service
 public class UserService {
 
+    @Autowired
+    private UserDao userDao;
+
+
     public List<User> getAllUsers(){
+        List<User> users = userDao.getUsers();
+
+        users.stream()
+                .filter(user -> user.getFirstName().equals("Klimov1970"))
+                .limit(3)
+
+                .forEach(System.out::println);
+
         return userDao.getUsers();
     }
 
-   @Autowired
-   private UserDao userDao;
 
    public String getFirstUserFirstName(){
        return userDao.getUsers().get(0).getFirstName();
    }
     public void storeUser(Registration reg){
-       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             reg.setPassword(encoder.encode(reg.getPassword()));
 
         userDao.storeUser(reg); //chtob sobludatj kononi (porjadok)

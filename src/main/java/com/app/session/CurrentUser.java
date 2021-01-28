@@ -7,4 +7,12 @@ public interface CurrentUser {
     String getName();
     void setName(String name);
 
+    Integer getlandId();
+
+    void setId(int id);
+
+    Integer getLangId();
+
+    void setLangId(Integer langId);
+
 }
